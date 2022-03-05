@@ -21,7 +21,7 @@ function drawSegment([ax, ay], [bx, by], scale, ctx) {
   ctx.stroke();
 }
 
-const round = (num) => {
+export const round = (num) => {
   return Math.round(num * 100) / 100;
 }
 
@@ -39,7 +39,7 @@ const getAngle = (start, mid, end) => {
   return angle > 180 ? 360 - angle : angle;
 }
 
-const drawSkeleton = (keypoints, ctx) => {
+const getAngles = (keypoints) => {
   const leftShoulder = getByName(keypoints, 'left_shoulder');
   const leftHip = getByName(keypoints, 'left_hip');
   const rightShoulder = getByName(keypoints, 'right_shoulder');
@@ -48,24 +48,20 @@ const drawSkeleton = (keypoints, ctx) => {
   const rightKnee = getByName(keypoints, 'right_knee');
   const leftAnkle = getByName(keypoints, 'left_ankle');
   const rightAnkle = getByName(keypoints, 'right_ankle');
-  // console.log('left_shoulder', leftShoulder);
-  // console.log('left_hip', leftHip);
-  drawSegment(leftShoulder, leftHip, 1, ctx);
-  drawSegment(rightShoulder, rightHip, 1, ctx);
-  drawSegment(leftHip, leftKnee, 1, ctx);
-  drawSegment(rightHip, rightKnee, 1, ctx);
-  drawSegment(leftKnee, leftAnkle, 1, ctx);
-  drawSegment(rightKnee, rightAnkle,1, ctx);
   if (rightAnkle[2] < .6) {
     return;
   }
   const kneeAngle = getAngle(rightAnkle, rightKnee, rightHip);
   const hipAngle = getAngle(rightKnee, rightHip, rightShoulder);
-  ctx.fillStyle = 'green';
-  ctx.font = "18px Verdana";
-  ctx.fillText(round(kneeAngle), rightKnee[0]*SCALE, rightKnee[1]*SCALE);
-  ctx.fillText(round(hipAngle), rightHip[0]*SCALE, rightHip[1]*SCALE);
+  // ctx.fillStyle = 'green';
+  // ctx.font = "18px Verdana";
+  // ctx.fillText(round(kneeAngle), rightKnee[0]*SCALE, rightKnee[1]*SCALE);
+  // ctx.fillText(round(hipAngle), rightHip[0]*SCALE, rightHip[1]*SCALE);
   // console.log('kneeFlexion: ', kneeFlexion)
+  return {
+    kneeAngle,
+    hipAngle
+  }
 }
 
 
@@ -89,7 +85,7 @@ export const drawCanvas = (pose, video, canvas) => {
       return
     }
     drawPoint(ctx, x, y, 3);
-    console.log(`${round(x)},${round(y)},${name},${round(score)}`)
+    // console.log(`${round(x)},${round(y)},${name},${round(score)}`)
   })
   poseDetection.util
     .getAdjacentPairs(poseDetection.SupportedModels.MoveNet)
@@ -112,7 +108,7 @@ export const drawCanvas = (pose, video, canvas) => {
       }
     });
   // drawSkeleton(keypoints, ctx);
-  console.log('-----------------------------------------------------------------')
+  return getAngles(keypoints);
 };
 
 
