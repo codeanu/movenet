@@ -5,7 +5,7 @@ const getByName = (array, name) => {
   let points = '';
   array.forEach(value => {
     if (value.name == name) {
-      points = [value.x, value.y];
+      points = [value.x, value.y, value.score];
     }
   })
   return points;
@@ -56,6 +56,9 @@ const drawSkeleton = (keypoints, ctx) => {
   drawSegment(rightHip, rightKnee, 1, ctx);
   drawSegment(leftKnee, leftAnkle, 1, ctx);
   drawSegment(rightKnee, rightAnkle,1, ctx);
+  if (rightAnkle[2] < .6) {
+    return;
+  }
   const kneeAngle = getAngle(rightAnkle, rightKnee, rightHip);
   const hipAngle = getAngle(rightKnee, rightHip, rightShoulder);
   ctx.fillStyle = 'green';
@@ -113,13 +116,30 @@ export const drawCanvas = (pose, video, canvas) => {
 };
 
 
+// BLOG: https://jmablog.com/post/posenet-app/
+
+// knee = poses[0].pose.leftKnee;
+// hip = poses[0].pose.leftHip;
+// ankle = poses[0].pose.leftAnkle;
+// shoulder = poses[0].pose.leftShoulder;
+// anKnee = { x: knee.x, y: ankle.y };
+// sHip = { x: shoulder.x, y: hip.y };
+
+// kneeFlexion =
+// (Math.atan2(ankle.y - knee.y, ankle.x - knee.x) - Math.atan2(hip.y - knee.y, hip.x - knee.x)) *
+// (180 / Math.PI);
+// hipFlexion =
+// 360 -
+// (Math.atan2(knee.y - hip.y, knee.x - hip.x) -
+//   Math.atan2(shoulder.y - hip.y, shoulder.x - hip.x)) *
+//   (180 / Math.PI);
 // dorsiflexion =
-//   360 -
-//   (Math.atan2(anKnee.y - ankle.y, anKnee.x - ankle.x) -
-//     Math.atan2(knee.y - ankle.y, knee.x - ankle.x)) *
-//     (180 / Math.PI);
+// 360 -
+// (Math.atan2(anKnee.y - ankle.y, anKnee.x - ankle.x) -
+//   Math.atan2(knee.y - ankle.y, knee.x - ankle.x)) *
+//   (180 / Math.PI);
 // trunkLean =
-//   360 -
-//   (Math.atan2(sHip.y - hip.y, sHip.x - hip.x) -
-//     Math.atan2(shoulder.y - hip.y, shoulder.x - hip.x)) *
-//     (180 / Math.PI);
+// 360 -
+// (Math.atan2(sHip.y - hip.y, sHip.x - hip.x) -
+//   Math.atan2(shoulder.y - hip.y, shoulder.x - hip.x)) *
+//   (180 / Math.PI);

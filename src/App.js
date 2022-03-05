@@ -31,36 +31,21 @@ function App() {
       const pose = await detector.estimatePoses(video);
       drawCanvas(pose[0], video, canvasRef);
     }
-
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div class="grid grid-cols-3 gap-4">
         {/* <video id="videoId" ref={videoRef} width="640" height="480" controls muted>
           <source src="squat.mp4" type="video/mp4" />
         </video> */}
         <Webcam
           ref={webcamRef}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}
         />
-        <canvas ref={canvasRef}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            zindex: 9,
-            width: 640,
-            height: 480,
-          }}></canvas>
-      </header>
+        <canvas ref={canvasRef}></canvas>
+        <div className="p-5">
+          <p class="text-lg">Angles</p>
+
+        </div>
     </div>
   );
 }

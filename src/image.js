@@ -1,5 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import './App.css';
 
@@ -7,7 +7,6 @@ function App() {
 
   //  Load posenet
   const createDetector = async () => {
-
     const detector = await poseDetection.createDetector(poseDetection.SupportedModels.MoveNet);
     //
     var imageElement = document.getElementById('cat');
