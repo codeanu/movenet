@@ -44,11 +44,8 @@ function App() {
           ref={webcamRef}
           style={{
             position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
             left: 0,
             right: 0,
-            textAlign: "center",
             zindex: 9,
             width: 640,
             height: 480,
@@ -57,11 +54,8 @@ function App() {
         <canvas ref={canvasRef}
           style={{
             position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
             left: 0,
             right: 0,
-            textAlign: "center",
             zindex: 9,
             width: 640,
             height: 480,

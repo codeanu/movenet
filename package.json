@@ -1,6 +1,7 @@
 {
   "name": "movenet",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@mediapipe/pose": "^0.5.1635988162",
@@ -41,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.7",
+    "tailwindcss": "^3.0.23"
   }
 }
